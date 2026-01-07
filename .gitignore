@@ -20,3 +20,4 @@ wheels/
 
 # Batch tracking files
 .vex-batch-*.json
+.DS_Store

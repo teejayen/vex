@@ -88,12 +88,12 @@ Results land in a JSONL file (one JSON object per line):
 ```json
 {
     "path": "/screenshots/IMG_4521.png",
-    "type": "recipe",
-    "category": "food",
-    "summary": "Thai green curry recipe",
-    "extracted_content": "Ingredients: 400ml coconut milk, 2 tbsp green curry paste, 500g chicken thigh, Thai basil, fish sauce...",
-    "tags": ["thai", "curry", "dinner", "chicken"],
-    "source": null,
+    "type": "article",
+    "category": "tech",
+    "summary": "Blog post about building Arc, a thinking partner that remembers context between sessions",
+    "extracted_content": "Building Arc: A Thinking Partner That Remembers\n\nArc is a personal AI system built on Claude that maintains context across sessions. Key features: persistent state via markdown files, journal for pattern detection over time, decision capture with reasoning, weekly reviews surfacing insights.\n\nThe difference between a stateless chatbot and a genuine thinking partner is memory.",
+    "tags": ["ai", "claude", "productivity", "arc", "thinking-partner"],
+    "source": "tim.neilen.com.au",
     "processed_at": "2025-01-07T12:00:00",
     "tokens_used": 1847
 }

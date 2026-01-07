@@ -369,11 +369,11 @@ def process_realtime(
 # =============================================================================
 
 
-def create_batch_request(path: Path, model: str) -> dict:
+def create_batch_request(path: Path, custom_id: str, model: str) -> dict:
     """Create a batch API request for a single image."""
     image_data, media_type = prepare_image(path)
     return {
-        "custom_id": str(path),
+        "custom_id": custom_id,
         "params": {
             "model": model,
             "max_tokens": 2000,
@@ -421,12 +421,16 @@ def cmd_batch(args: argparse.Namespace) -> None:
 
     print(f"Preparing {len(images)} images for batch processing...")
 
-    # Build requests
+    # Build requests with custom_id -> path mapping
     requests = []
+    path_mapping = {}
     failed = 0
-    for path in tqdm(images, desc="Preparing"):
+    for idx, path in enumerate(tqdm(images, desc="Preparing")):
         try:
-            requests.append(create_batch_request(path, args.model))
+            # Use index-based custom_id (batch API requires ^[a-zA-Z0-9_-]{1,64}$)
+            custom_id = f"img_{idx:06d}"
+            path_mapping[custom_id] = str(path)
+            requests.append(create_batch_request(path, custom_id, args.model))
         except Exception as e:
             failed += 1
             tqdm.write(f"Skipped {path.name}: {e}")
@@ -447,7 +451,7 @@ def cmd_batch(args: argparse.Namespace) -> None:
     print(f"\nCheck progress: vex status {batch.id}")
     print(f"Get results:    vex results {batch.id}")
 
-    # Save batch info
+    # Save batch info with path mapping
     info_file = Path(f".vex-batch-{batch.id}.json")
     with open(info_file, "w") as f:
         json.dump(
@@ -458,6 +462,7 @@ def cmd_batch(args: argparse.Namespace) -> None:
                 "submitted_at": datetime.now().isoformat(),
                 "directory": str(args.directory),
                 "output_file": str(args.output),
+                "path_mapping": path_mapping,
             },
             f,
             indent=2,
@@ -493,6 +498,17 @@ def cmd_results(args: argparse.Namespace) -> None:
         print(f"Batch not complete. Status: {batch.processing_status}")
         sys.exit(1)
 
+    # Load path mapping from batch info file
+    info_file = Path(f".vex-batch-{args.batch_id}.json")
+    path_mapping = {}
+    if info_file.exists():
+        with open(info_file) as f:
+            info = json.load(f)
+            path_mapping = info.get("path_mapping", {})
+    else:
+        print(f"Warning: Batch info file not found ({info_file})")
+        print("Results will use custom_id instead of original paths")
+
     print(f"Downloading results to {args.output}...")
 
     count = 0
@@ -501,7 +517,9 @@ def cmd_results(args: argparse.Namespace) -> None:
     with open(args.output, "a") as f:
         for result in client.messages.batches.results(args.batch_id):
             count += 1
-            path = result.custom_id
+            custom_id = result.custom_id
+            # Map custom_id back to original path
+            path = path_mapping.get(custom_id, custom_id)
 
             if result.result.type == "succeeded":
                 response = result.result.message

@@ -90,10 +90,10 @@ Results land in a JSONL file (one JSON object per line):
     "path": "/screenshots/IMG_4521.png",
     "type": "recipe",
     "category": "food",
-    "summary": "Thai green curry recipe from Bon Appetit",
-    "extracted_content": "Ingredients: 400ml coconut milk, 2 tbsp green curry paste...",
-    "tags": ["thai", "curry", "dinner", "bon-appetit"],
-    "source": "bonappetit.com",
+    "summary": "Thai green curry recipe",
+    "extracted_content": "Ingredients: 400ml coconut milk, 2 tbsp green curry paste, 500g chicken thigh, Thai basil, fish sauce...",
+    "tags": ["thai", "curry", "dinner", "chicken"],
+    "source": null,
     "processed_at": "2025-01-07T12:00:00",
     "tokens_used": 1847
 }
@@ -143,6 +143,17 @@ vex organise <jsonl>        Sort files into category folders
 Processing saves progress as it goes. If it stops, run the same command again - it picks up where it left off.
 
 For batch mode, use `vex status` and `vex results` to check progress and download when ready.
+
+## AgentSkill
+
+vex is also available as an [AgentSkill](https://agentskills.io) - a portable format that lets AI agents process screenshots directly using their own vision capabilities, no script required.
+
+The `SKILL.md` file contains instructions for agentic extraction. Any compatible agent can:
+1. Find images in a directory
+2. Analyse each image using vision
+3. Output structured JSONL
+
+This means you can use vex's extraction logic in Claude Code, GitHub Copilot, or any agent that supports the AgentSkills format.
 
 ## What Next?
 

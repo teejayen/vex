@@ -1,23 +1,13 @@
-# Python-generated files
-__pycache__/
-*.py[oc]
-build/
-dist/
-wheels/
-*.egg-info
-
-# Virtual environments
-.venv
-
-# Environment
 .env
-
-# Ruff cache
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
 .ruff_cache/
-
-# Output files
-*.jsonl
-
-# Batch tracking files
-.vex-batch-*.json
+dist/
+*.sqlite
+*.sqlite-*
 .DS_Store
+
+# Version 1 batch tracking files
+.vex-batch-*.json

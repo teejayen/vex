@@ -1,0 +1,373 @@
+# The built-in taxonomy, used when a library root has no taxonomy.toml of its own.
+#
+# Copy this file to <root>/taxonomy.toml and edit it to suit what your own library is
+# actually full of. Categories are offered to the model in the order they appear here.
+#
+# Per category:
+#   name        lowercase slug; it becomes a directory name under notes/ and views/
+#   description one or two sentences telling the model what belongs here
+#   structured  optional, "recipe" or "use-note"; what extra field the model fills in
+#   purgeable   whether an original may be deleted once its note and thumbnail exist
+#   strong      phrases that are close to decisive for the keyword tier
+#   weak        phrases that only count together
+#   tags        tags added to anything the keyword tier files here
+#
+# "junk" and "other" are required: every capture has to have somewhere to land.
+
+[[category]]
+name = "recipe"
+description = "A food recipe: ingredient list, method steps, a recipe card or a cooking post."
+structured = "recipe"
+purgeable = false
+strong = [
+    "ingredients",
+    "preheat the oven",
+    "tablespoons",
+    "teaspoons",
+    "finely chopped",
+    "recipe",
+]
+weak = [
+    "tbsp",
+    "tsp",
+    "serves",
+    "bake",
+    "oven",
+    "simmer",
+    "whisk",
+    "dough",
+    "marinate",
+    "saucepan",
+    "olive oil",
+    "salt and pepper",
+    "cook for",
+]
+tags = ["recipe", "cooking"]
+
+[[category]]
+name = "receipt"
+description = """
+Money changing hands: receipts, invoices, order totals, banking and account screens, \
+transfers, statements.\
+"""
+purgeable = false
+strong = [
+    "tax invoice",
+    "amount due",
+    "total due",
+    "account balance",
+    "available balance",
+    "invoice",
+    "receipt",
+]
+weak = [
+    "payment",
+    "balance",
+    "transfer",
+    "due date",
+    "subtotal",
+    "paid",
+    "interest rate",
+    "direct debit",
+    "statement",
+    "card ending",
+]
+tags = ["receipt", "money"]
+
+[[category]]
+name = "code"
+description = """
+Terminals, source code, configuration files, error messages, stack traces and \
+developer tooling.\
+"""
+purgeable = true
+strong = [
+    "traceback",
+    "stack trace",
+    "npm install",
+    "git commit",
+    "command not found",
+    "syntaxerror",
+    "segmentation fault",
+    "def ",
+    "const ",
+    "sudo ",
+]
+weak = [
+    "terminal",
+    "bash",
+    "zsh",
+    "python",
+    "docker",
+    "kubectl",
+    "localhost",
+    "http://",
+    "https://",
+    "json",
+    "null",
+    "undefined",
+    "exception",
+    "stderr",
+    "branch",
+]
+tags = ["code"]
+
+[[category]]
+name = "article"
+description = """
+A written piece read on the web: a news story, a blog post, a newsletter, documentation \
+or course material.\
+"""
+structured = "use-note"
+purgeable = true
+strong = [
+    "min read",
+    "share this article",
+    "subscribe to continue",
+    "related articles",
+    "continue reading",
+]
+weak = [
+    "published",
+    "newsletter",
+    "read more",
+    "opinion",
+    "by the author",
+    "comments",
+    "table of contents",
+]
+tags = ["article", "reading"]
+
+[[category]]
+name = "social-post"
+description = """
+A post, profile, comment thread or notification on any social platform: LinkedIn, \
+Instagram, X, Reddit, Facebook, TikTok, Threads, Mastodon.\
+"""
+structured = "use-note"
+purgeable = true
+strong = [
+    "linkedin",
+    "instagram",
+    "reddit",
+    "tiktok",
+    "mastodon",
+    "x.com",
+    "twitter",
+    "threads",
+]
+weak = [
+    "repost",
+    "retweet",
+    "upvote",
+    "reactions",
+    "followers",
+    "following",
+    "liked by",
+    "reels",
+    "subreddit",
+    "add to story",
+    "impressions",
+    "for you page",
+]
+tags = ["social"]
+
+[[category]]
+name = "message"
+description = """
+A conversation thread in a messaging or email client: iMessage, WhatsApp, Signal, SMS, \
+email, Teams, Slack.\
+"""
+purgeable = false
+strong = [
+    "imessage",
+    "whatsapp",
+    "sent as text message",
+    "read receipt",
+    "microsoft teams",
+    "forwarded message",
+]
+weak = [
+    "typing",
+    "unread",
+    "subject:",
+    "reply all",
+    "inbox",
+    "cc:",
+    "sent from my",
+    "delivered",
+]
+tags = ["message"]
+
+[[category]]
+name = "map"
+description = """
+Maps, directions, flights, boarding passes, itineraries, accommodation bookings and \
+public transport.\
+"""
+purgeable = false
+strong = [
+    "boarding pass",
+    "booking reference",
+    "google maps",
+    "apple maps",
+    "itinerary",
+    "check-in opens",
+]
+weak = [
+    "departure",
+    "arrival",
+    "gate ",
+    "flight",
+    "hotel",
+    "route",
+    "min drive",
+    "airport",
+    "seat ",
+    "platform ",
+]
+tags = ["map", "travel"]
+
+[[category]]
+name = "shopping"
+description = """
+Retail and buying: product pages, carts, checkouts, order confirmations, listings and \
+price comparisons.\
+"""
+purgeable = false
+strong = [
+    "add to cart",
+    "add to bag",
+    "proceed to checkout",
+    "free shipping",
+    "sold out",
+    "buy now",
+    "order confirmed",
+]
+weak = [
+    "in stock",
+    "rrp",
+    "cart",
+    "delivery",
+    "order",
+    "reviews",
+    "add to wishlist",
+    "sale",
+    "discount",
+]
+tags = ["shopping"]
+
+[[category]]
+name = "event"
+description = """
+Something happening at a time and place: invitations, tickets, calendar entries, \
+bookings, opening hours.\
+"""
+purgeable = false
+strong = [
+    "add to calendar",
+    "rsvp",
+    "doors open",
+    "your ticket",
+    "ticket confirmation",
+    "eventbrite",
+]
+weak = [
+    "tickets",
+    "venue",
+    "attending",
+    "invite",
+    "starts at",
+    "all day",
+    "opening hours",
+    "booking confirmed",
+]
+tags = ["event"]
+
+[[category]]
+name = "document"
+description = """
+A form, letter, contract, policy or scanned page: something written to be filed rather \
+than read for pleasure.\
+"""
+purgeable = false
+strong = [
+    "terms and conditions",
+    "signature required",
+    "please sign",
+    "policy number",
+    "page 1 of",
+]
+weak = [
+    "reference number",
+    "declaration",
+    "clause",
+    "attachment",
+    "date of birth",
+    "application form",
+    "expiry date",
+]
+tags = ["document"]
+
+[[category]]
+name = "meme"
+description = "A meme, joke, funny post or amusing image kept for the laugh."
+purgeable = true
+strong = ["nobody:", "me when", "pov:"]
+weak = [
+    "meme",
+    "relatable",
+    "when you",
+    "literally me",
+    "so true",
+    "caption this",
+]
+tags = ["meme", "humour"]
+
+[[category]]
+name = "screenshot-of-ui"
+description = """
+An app or website interface captured for how it works or how it looks: settings screens, \
+dashboards, layouts kept as a design reference.\
+"""
+purgeable = true
+strong = [
+    "app store",
+    "software update",
+    "privacy settings",
+    "notification settings",
+    "manage account",
+]
+weak = [
+    "settings",
+    "preferences",
+    "dark mode",
+    "permissions",
+    "sign out",
+    "dashboard",
+    "toggle",
+]
+tags = ["ui"]
+
+[[category]]
+name = "junk"
+description = """
+Not worth keeping: blank or near-blank captures, accidental screenshots, lock screens, \
+partial captures, loading and error placeholders, home screens.\
+"""
+purgeable = false
+strong = [
+    "swipe up to open",
+    "enter passcode",
+    "face id",
+    "touch id",
+    "no internet connection",
+    "slide to unlock",
+]
+weak = ["loading", "please wait", "connecting", "screen time", "low battery"]
+tags = ["junk"]
+
+[[category]]
+name = "other"
+description = "Something real and worth keeping that does not fit any other category."
+purgeable = false

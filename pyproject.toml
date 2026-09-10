@@ -1,30 +1,78 @@
 [project]
 name = "vex"
-version = "0.1.0"
-description = "Vision extraction - batch process screenshots with Claude"
+version = "2.0.0"
+description = "Catalogue, OCR, classify and prune a library of screenshots."
 readme = "README.md"
 license = "MIT"
+license-files = ["LICENSE"]
 requires-python = ">=3.12"
 dependencies = [
-    "anthropic>=0.40.0",
-    "pillow>=10.0.0",
-    "tqdm>=4.66.0",
-    "python-dotenv>=1.0.0",
+    "typer>=0.15",
+    "rich>=13.9",
+    "pillow>=11.0",
+    "imagehash>=4.3",
+    "python-dotenv>=1.0",
+    "httpx>=0.28.1",
+    "pillow-heif>=1.7.0",
 ]
 
-[dependency-groups]
-dev = [
-    "ruff>=0.8.0",
+[project.optional-dependencies]
+mac = [
+    "pyobjc-framework-Vision>=10.3; sys_platform == 'darwin'",
+    "pyobjc-framework-Quartz>=10.3; sys_platform == 'darwin'",
+    "osxphotos>=0.68; sys_platform == 'darwin'",
+    "photoscript>=0.3; sys_platform == 'darwin'",
 ]
+tesseract = ["pytesseract>=0.3.13"]
+
+[project.scripts]
+vex = "vex.cli:main"
+
+[dependency-groups]
+dev = [{ include-group = "lint" }, { include-group = "test" }]
+lint = ["ruff>=0.9"]
+test = ["pytest>=8.3"]
+
+[build-system]
+requires = ["uv_build>=0.9,<0.10"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-root = ""
+module-name = "vex"
 
 [tool.ruff]
 line-length = 100
 target-version = "py312"
 
 [tool.ruff.lint]
-select = ["E", "F", "I", "N", "W", "UP"]
-ignore = ["E501"]
+select = ["ALL"]
+ignore = [
+    "D",       # docstring style; we use plain prose docstrings where useful
+    "COM812",  # conflicts with the formatter
+    "ISC001",  # conflicts with the formatter
+    "ANN401",  # Any is fine in a few JSON-shaped places
+    "S101",    # assert is fine in tests
+    "PLR0913", # CLI entry points take a lot of options
+    "FBT001",  # typer needs bool positional-ish params
+    "FBT002",
+    "FBT003", # NamedTuple result objects carry positional flags
+    "TC001",   # keep imports at runtime; the modules are small
+    "TC002",
+    "TC003",
+    "TRY003",  # long messages in raised exceptions are fine here
+    "EM101",
+    "EM102",
+    "T201",    # this is a CLI; it prints
+    "CPY001",  # no copyright headers in this project
+    "PLR0917", # helper functions mirror table columns positionally
+]
 
-[tool.ruff.format]
-quote-style = "double"
-indent-style = "space"
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["INP001", "PLR2004", "SLF001", "E501"]
+
+[tool.ruff.lint.flake8-tidy-imports]
+ban-relative-imports = "all"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
